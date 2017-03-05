@@ -21,7 +21,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    ArduinoSerial *arduino;
 };
 
 #endif // MAINWINDOW_H

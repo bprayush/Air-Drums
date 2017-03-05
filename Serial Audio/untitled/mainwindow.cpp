@@ -1,18 +1,40 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QDebug>
 
+ArduinoSerial *arduino;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    //CREATE THE ARDUINO OBJECT FROM ARDUINOSERIAL CLASS
+    arduino = new ArduinoSerial();
+
+    //SET THE TITLE OF THE WINDOW
     this->setWindowTitle("Drum Machine!");
+
+    //SET THE TEXT OF THE CONNECT BUTTON
     ui->connectButton->setText("Connect");
+
+    //SET THE TEXT OF EXIT BUTTON
     ui->exitButton->setText("Exit");
+    //SET MAXIMUM VALUE OF VOLUME KNOB TO 100
     ui->volumeKnob->setMaximum(100);
+    //SET THE MAXIMUM VALUE OF SPINX BOX TO 100
     ui->spinBox->setMaximum(100);
+    //DISPLAY THE VOLUME LABEL
+
     ui->volumeLabel->setText("<center><b>Volume</b></center>");
+
+    //DISPLAY THE CONNECTION STATUS AS PER THE CONNECTION
+    ui->connectionStatus->setText("<center><font color=red><b>Disconnected!</b></font></center>");
+
+    QStringList list = arduino->portList();
+
+    ui->comboBox->addItems(list);
 }
 
 MainWindow::~MainWindow()
@@ -23,5 +45,17 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_connectButton_pressed()
 {
-    arduino->connect("/dev/ttyACM1");
+    qDebug() << "Connection: " << arduino->connect(ui->comboBox->currentText());
+
+    if(arduino->connect(ui->comboBox->currentText()) == true)
+    {
+        ui->connectButton->setText("Disconnect");
+        ui->connectionStatus->setText("<center><font color=green><b>Connected!</b></font></center>");
+    }
+    else if(arduino->connect(ui->comboBox->currentText()) == false)
+    {
+        ui->connectButton->setText("Connect");
+        ui->connectionStatus->setText("<center><font color=red><b>Desconnected!</b></font></center>");
+    }
+
 }

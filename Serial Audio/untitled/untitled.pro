@@ -24,3 +24,7 @@ HEADERS  += mainwindow.h \
     mediaplayer.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    res.qrc \
+    res.qrc

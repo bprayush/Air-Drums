@@ -11,15 +11,10 @@ ArduinoSerial::ArduinoSerial()
 }
 
 //FUNCTION TO CONNEC TO THE SERIAL DEVICE
-void ArduinoSerial::connect(QString port)
+bool ArduinoSerial::connect(QString port)
 {
-    foreach(QSerialPortInfo info, QSerialPortInfo::availablePorts())
-    {
-        qDebug() << "Name: " << info.portName() << endl;
-        qDebug() << "Manufacturer: " << info.manufacturer() << endl;
-    }
-
     //SET THE PORT NAME
+    qDebug() << "Connected Port: " << port << endl;
     serial.setPortName(port);
     //SET THE BAUD RATE OF THE PORT (USED 9600)
     serial.setBaudRate(QSerialPort::Baud9600);
@@ -33,17 +28,17 @@ void ArduinoSerial::connect(QString port)
     serial.setFlowControl(QSerialPort::NoFlowControl);
 
     //OPEN THE SERIAL CONNECTION IF NOT OPENED
-    //while(!serial.isOpen()) serial.open(QIODevice::ReadWrite);
+    if(!serial.isOpen())
+        serial.open(QIODevice::ReadWrite);
 
+    qDebug() << "Connection status: " << serial.isOpen();
 
+    return serial.isOpen();
 }
 
 //FUNCTION TO GET THE DATA FROM THE ARDUINO OF RESPECTIVE SENSORS
 int ArduinoSerial::getData(QByteArray selectBit)
 {
-    //QTIMER OBJECT TO WORK WITH THREADS
-    QTimer *timer = new QTimer();
-
     //SET THE SELECTOIN BIT TO GET THE DATA OF CORRESPONDING SENSOR
     this->selectBit = selectBit;
 
@@ -81,3 +76,15 @@ void ArduinoSerial::readData()
     }
 }
 
+QStringList ArduinoSerial::portList()
+{
+    QStringList list;
+    foreach(QSerialPortInfo info, QSerialPortInfo::availablePorts())
+    {
+        list.append(info.portName());
+        //qDebug() << "Name: " << info.portName() << endl;
+        //qDebug() << "Manufacturer: " << info.manufacturer() << endl;
+    }
+
+    return list;
+}

@@ -3,14 +3,16 @@
 #include <QSerialPort>
 #include <QString>
 #include <QObject>
+#include <QStringList>
 
 class ArduinoSerial
 {
 
 public:
     ArduinoSerial();
-    void connect(QString port);
+    bool connect(QString port);
     int getData(QByteArray selectBit);
+    QStringList portList();
 
 private:
     QSerialPort serial;

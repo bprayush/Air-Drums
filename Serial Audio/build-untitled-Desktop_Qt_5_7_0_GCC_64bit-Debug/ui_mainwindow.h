@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QDial>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
@@ -31,16 +32,21 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
+    QLabel *connectionStatus;
     QWidget *widget;
-    QHBoxLayout *horizontalLayout;
-    QPushButton *connectButton;
-    QPushButton *exitButton;
-    QWidget *widget1;
     QVBoxLayout *verticalLayout_2;
     QLabel *volumeLabel;
     QVBoxLayout *verticalLayout;
     QDial *volumeKnob;
     QSpinBox *spinBox;
+    QWidget *widget1;
+    QVBoxLayout *verticalLayout_3;
+    QHBoxLayout *horizontalLayout_2;
+    QLabel *label;
+    QComboBox *comboBox;
+    QHBoxLayout *horizontalLayout;
+    QPushButton *connectButton;
+    QPushButton *exitButton;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
 
@@ -51,33 +57,18 @@ public:
         MainWindow->resize(400, 300);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        connectionStatus = new QLabel(centralWidget);
+        connectionStatus->setObjectName(QStringLiteral("connectionStatus"));
+        connectionStatus->setGeometry(QRect(10, 40, 371, 20));
         widget = new QWidget(centralWidget);
         widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(0, 200, 261, 23));
-        horizontalLayout = new QHBoxLayout(widget);
-        horizontalLayout->setSpacing(6);
-        horizontalLayout->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        connectButton = new QPushButton(widget);
-        connectButton->setObjectName(QStringLiteral("connectButton"));
-
-        horizontalLayout->addWidget(connectButton);
-
-        exitButton = new QPushButton(widget);
-        exitButton->setObjectName(QStringLiteral("exitButton"));
-
-        horizontalLayout->addWidget(exitButton);
-
-        widget1 = new QWidget(centralWidget);
-        widget1->setObjectName(QStringLiteral("widget1"));
-        widget1->setGeometry(QRect(290, 70, 104, 149));
-        verticalLayout_2 = new QVBoxLayout(widget1);
+        widget->setGeometry(QRect(290, 90, 104, 149));
+        verticalLayout_2 = new QVBoxLayout(widget);
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         verticalLayout_2->setContentsMargins(0, 0, 0, 0);
-        volumeLabel = new QLabel(widget1);
+        volumeLabel = new QLabel(widget);
         volumeLabel->setObjectName(QStringLiteral("volumeLabel"));
 
         verticalLayout_2->addWidget(volumeLabel);
@@ -85,18 +76,58 @@ public:
         verticalLayout = new QVBoxLayout();
         verticalLayout->setSpacing(6);
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        volumeKnob = new QDial(widget1);
+        volumeKnob = new QDial(widget);
         volumeKnob->setObjectName(QStringLiteral("volumeKnob"));
 
         verticalLayout->addWidget(volumeKnob);
 
-        spinBox = new QSpinBox(widget1);
+        spinBox = new QSpinBox(widget);
         spinBox->setObjectName(QStringLiteral("spinBox"));
 
         verticalLayout->addWidget(spinBox);
 
 
         verticalLayout_2->addLayout(verticalLayout);
+
+        widget1 = new QWidget(centralWidget);
+        widget1->setObjectName(QStringLiteral("widget1"));
+        widget1->setGeometry(QRect(20, 150, 261, 54));
+        verticalLayout_3 = new QVBoxLayout(widget1);
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        label = new QLabel(widget1);
+        label->setObjectName(QStringLiteral("label"));
+
+        horizontalLayout_2->addWidget(label);
+
+        comboBox = new QComboBox(widget1);
+        comboBox->setObjectName(QStringLiteral("comboBox"));
+
+        horizontalLayout_2->addWidget(comboBox);
+
+
+        verticalLayout_3->addLayout(horizontalLayout_2);
+
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        connectButton = new QPushButton(widget1);
+        connectButton->setObjectName(QStringLiteral("connectButton"));
+
+        horizontalLayout->addWidget(connectButton);
+
+        exitButton = new QPushButton(widget1);
+        exitButton->setObjectName(QStringLiteral("exitButton"));
+
+        horizontalLayout->addWidget(exitButton);
+
+
+        verticalLayout_3->addLayout(horizontalLayout);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
@@ -117,9 +148,11 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
+        connectionStatus->setText(QApplication::translate("MainWindow", "TextLabel", 0));
+        volumeLabel->setText(QApplication::translate("MainWindow", "Volume", 0));
+        label->setText(QApplication::translate("MainWindow", "Select Port: ", 0));
         connectButton->setText(QApplication::translate("MainWindow", "PushButton", 0));
         exitButton->setText(QApplication::translate("MainWindow", "Exit", 0));
-        volumeLabel->setText(QApplication::translate("MainWindow", "Volume", 0));
     } // retranslateUi
 
 };
