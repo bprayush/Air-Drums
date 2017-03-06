@@ -18,9 +18,11 @@ public:
 
 private slots:
     void on_connectButton_pressed();
+    void on_volumeKnob_sliderMoved(int position);
 
 private:
     Ui::MainWindow *ui;
+    bool statusFlag;
 };
 
 #endif // MAINWINDOW_H

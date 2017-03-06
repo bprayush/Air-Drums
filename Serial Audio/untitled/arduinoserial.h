@@ -4,21 +4,35 @@
 #include <QString>
 #include <QObject>
 #include <QStringList>
+#include <QMediaPlayer>
+#include <QTimer>
 
-class ArduinoSerial
+class ArduinoSerial: public QObject
 {
+    Q_OBJECT
 
 public:
     ArduinoSerial();
     bool connect(QString port);
-    int getData(QByteArray selectBit);
     QStringList portList();
+    bool disConnect();
+    ~ArduinoSerial();
+    void setVolume(int volume);
+    void play();
+    void stop();
 
 private:
     QSerialPort serial;
-    int data;
+    ArduinoSerial *arduino;
+    char data;
     QByteArray selectBit;
-    void readData();
+    QMediaPlayer *player;
+    QMediaPlayer *player1;
+    QMediaPlayer *player2;
+    QTimer  *timer;
+
+private slots:
+    void getData();
 
 };
 

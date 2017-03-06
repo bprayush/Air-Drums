@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/sounds">
         <file>sounds/kick.wav</file>
-        <file>sounds/snare.wav</file>
-        <file>sounds/simplehat.wav</file>
+        <file>sounds/snare.WAV</file>
+        <file>sounds/simplehat1.wav</file>
     </qresource>
 </RCC>

@@ -50,13 +50,13 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../untitled/main.cpp \
 		../untitled/mainwindow.cpp \
-		../untitled/arduinoserial.cpp \
-		../untitled/mediaplayer.cpp moc_mainwindow.cpp \
+		../untitled/arduinoserial.cpp qrc_res.cpp \
+		moc_mainwindow.cpp \
 		moc_arduinoserial.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		arduinoserial.o \
-		mediaplayer.o \
+		qrc_res.o \
 		moc_mainwindow.o \
 		moc_arduinoserial.o
 DIST          = ../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pre.prf \
@@ -213,11 +213,9 @@ DIST          = ../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/yacc.prf \
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/lex.prf \
 		../untitled/untitled.pro ../untitled/mainwindow.h \
-		../untitled/arduinoserial.h \
-		../untitled/mediaplayer.h ../untitled/main.cpp \
+		../untitled/arduinoserial.h ../untitled/main.cpp \
 		../untitled/mainwindow.cpp \
-		../untitled/arduinoserial.cpp \
-		../untitled/mediaplayer.cpp
+		../untitled/arduinoserial.cpp
 QMAKE_TARGET  = untitled
 DESTDIR       = 
 TARGET        = untitled
@@ -383,6 +381,7 @@ Makefile: ../untitled/untitled.pro ../../../../Qt5.7.0/5.7/gcc_64/mkspecs/linux-
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/yacc.prf \
 		../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/lex.prf \
 		../untitled/untitled.pro \
+		../untitled/res.qrc \
 		../../../../Qt5.7.0/5.7/gcc_64/lib/libQt5Multimedia.prl \
 		../../../../Qt5.7.0/5.7/gcc_64/lib/libQt5Widgets.prl \
 		../../../../Qt5.7.0/5.7/gcc_64/lib/libQt5Gui.prl \
@@ -544,6 +543,7 @@ Makefile: ../untitled/untitled.pro ../../../../Qt5.7.0/5.7/gcc_64/mkspecs/linux-
 ../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/yacc.prf:
 ../../../../Qt5.7.0/5.7/gcc_64/mkspecs/features/lex.prf:
 ../untitled/untitled.pro:
+../untitled/res.qrc:
 ../../../../Qt5.7.0/5.7/gcc_64/lib/libQt5Multimedia.prl:
 ../../../../Qt5.7.0/5.7/gcc_64/lib/libQt5Widgets.prl:
 ../../../../Qt5.7.0/5.7/gcc_64/lib/libQt5Gui.prl:
@@ -564,8 +564,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../untitled/mainwindow.h ../untitled/arduinoserial.h ../untitled/mediaplayer.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../untitled/main.cpp ../untitled/mainwindow.cpp ../untitled/arduinoserial.cpp ../untitled/mediaplayer.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../untitled/res.qrc ../untitled/res.qrc $(DISTDIR)/
+	$(COPY_FILE) --parents ../untitled/mainwindow.h ../untitled/arduinoserial.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../untitled/main.cpp ../untitled/mainwindow.cpp ../untitled/arduinoserial.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../untitled/mainwindow.ui $(DISTDIR)/
 
 
@@ -590,8 +591,23 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all:
+compiler_rcc_make_all: qrc_res.cpp qrc_res.cpp
 compiler_rcc_clean:
+	-$(DEL_FILE) qrc_res.cpp qrc_res.cpp
+qrc_res.cpp: ../untitled/res.qrc \
+		../../../../Qt5.7.0/5.7/gcc_64/bin/rcc \
+		../untitled/sounds/kick.wav \
+		../untitled/sounds/simplehat1.wav \
+		../untitled/sounds/snare.WAV
+	/home/bprayush/Qt5.7.0/5.7/gcc_64/bin/rcc -name res ../untitled/res.qrc -o qrc_res.cpp
+
+qrc_res.cpp: ../untitled/res.qrc \
+		../../../../Qt5.7.0/5.7/gcc_64/bin/rcc \
+		../untitled/sounds/kick.wav \
+		../untitled/sounds/simplehat1.wav \
+		../untitled/sounds/snare.WAV
+	/home/bprayush/Qt5.7.0/5.7/gcc_64/bin/rcc -name res ../untitled/res.qrc -o qrc_res.cpp
+
 compiler_moc_header_make_all: moc_mainwindow.cpp moc_arduinoserial.cpp
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp moc_arduinoserial.cpp
@@ -695,6 +711,31 @@ moc_mainwindow.cpp: ../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QMainWindow
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtouchdevice.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qicon.h \
+		../untitled/arduinoserial.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtSerialPort/QSerialPort \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtSerialPort/qserialport.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtSerialPort/qserialportglobal.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QString \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QObject \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QStringList \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/QMediaPlayer \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaplayer.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaobject.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qtmultimediadefs.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmultimedia.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediacontent.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaresource.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QSharedDataPointer \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QUrl \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QVariant \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaenumdebug.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qmetaobject.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qaudio.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtNetwork/qnetworkconfiguration.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QTimer \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qtimer.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qbasictimer.h \
 		../untitled/mainwindow.h \
 		../../../../Qt5.7.0/5.7/gcc_64/bin/moc
 	/home/bprayush/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/bprayush/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I'/home/bprayush/Documents/QT/Serial Audio/untitled' -I/home/bprayush/Qt5.7.0/5.7/gcc_64/include -I/home/bprayush/Qt5.7.0/5.7/gcc_64/include/QtMultimedia -I/home/bprayush/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/bprayush/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/bprayush/Qt5.7.0/5.7/gcc_64/include/QtSerialPort -I/home/bprayush/Qt5.7.0/5.7/gcc_64/include/QtNetwork -I/home/bprayush/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/usr/include/c++/4.8/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../untitled/mainwindow.h -o moc_mainwindow.cpp
@@ -752,6 +793,40 @@ moc_arduinoserial.cpp: ../../../../Qt5.7.0/5.7/gcc_64/include/QtSerialPort/QSeri
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtSerialPort/qserialportglobal.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QString \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QObject \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QStringList \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/QMediaPlayer \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaplayer.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaobject.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qtmultimediadefs.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmultimedia.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediacontent.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qshareddata.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qhash.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaresource.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qmap.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qdebug.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qtextstream.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qlocale.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qvariant.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qvector.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qpoint.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qset.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QSharedDataPointer \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QUrl \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qurl.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qurlquery.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QVariant \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaenumdebug.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qmetaobject.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qaudio.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtNetwork/qnetworkconfiguration.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QTimer \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qtimer.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qbasictimer.h \
 		../untitled/arduinoserial.h \
 		../../../../Qt5.7.0/5.7/gcc_64/bin/moc
 	/home/bprayush/Qt5.7.0/5.7/gcc_64/bin/moc $(DEFINES) -I/home/bprayush/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++ -I'/home/bprayush/Documents/QT/Serial Audio/untitled' -I/home/bprayush/Qt5.7.0/5.7/gcc_64/include -I/home/bprayush/Qt5.7.0/5.7/gcc_64/include/QtMultimedia -I/home/bprayush/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/home/bprayush/Qt5.7.0/5.7/gcc_64/include/QtGui -I/home/bprayush/Qt5.7.0/5.7/gcc_64/include/QtSerialPort -I/home/bprayush/Qt5.7.0/5.7/gcc_64/include/QtNetwork -I/home/bprayush/Qt5.7.0/5.7/gcc_64/include/QtCore -I. -I/usr/include/c++/4.8 -I/usr/include/x86_64-linux-gnu/c++/4.8 -I/usr/include/c++/4.8/backward -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/4.8/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../untitled/arduinoserial.h -o moc_arduinoserial.cpp
@@ -771,7 +846,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_rcc_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
@@ -876,6 +951,31 @@ main.o: ../untitled/main.cpp ../untitled/mainwindow.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtouchdevice.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qicon.h \
+		../untitled/arduinoserial.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtSerialPort/QSerialPort \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtSerialPort/qserialport.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtSerialPort/qserialportglobal.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QString \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QObject \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QStringList \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/QMediaPlayer \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaplayer.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaobject.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qtmultimediadefs.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmultimedia.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediacontent.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaresource.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QSharedDataPointer \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QUrl \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QVariant \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaenumdebug.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qmetaobject.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qaudio.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtNetwork/qnetworkconfiguration.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QTimer \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qtimer.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qbasictimer.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QApplication \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qapplication.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qcoreapplication.h \
@@ -883,12 +983,6 @@ main.o: ../untitled/main.cpp ../untitled/mainwindow.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qdesktopwidget.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qguiapplication.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qinputmethod.h \
-		../untitled/arduinoserial.h \
-		../../../../Qt5.7.0/5.7/gcc_64/include/QtSerialPort/QSerialPort \
-		../../../../Qt5.7.0/5.7/gcc_64/include/QtSerialPort/qserialport.h \
-		../../../../Qt5.7.0/5.7/gcc_64/include/QtSerialPort/qserialportglobal.h \
-		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QString \
-		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QObject \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../untitled/main.cpp
 
@@ -993,8 +1087,32 @@ mainwindow.o: ../untitled/mainwindow.cpp ../untitled/mainwindow.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qtouchdevice.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qicon.h \
-		ui_mainwindow.h \
+		../untitled/arduinoserial.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtSerialPort/QSerialPort \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtSerialPort/qserialport.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtSerialPort/qserialportglobal.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QString \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QObject \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QStringList \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/QMediaPlayer \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaplayer.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaobject.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qtmultimediadefs.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmultimedia.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediacontent.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaresource.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QSharedDataPointer \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QUrl \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QVariant \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaenumdebug.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qmetaobject.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qaudio.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtNetwork/qnetworkconfiguration.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QTimer \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qtimer.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qbasictimer.h \
+		ui_mainwindow.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QAction \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qaction.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qactiongroup.h \
@@ -1007,13 +1125,8 @@ mainwindow.o: ../untitled/mainwindow.cpp ../untitled/mainwindow.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtGui/qinputmethod.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QButtonGroup \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qbuttongroup.h \
-		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QHeaderView \
-		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qheaderview.h \
-		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractitemview.h \
-		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractscrollarea.h \
-		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qframe.h \
-		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qabstractitemmodel.h \
-		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qitemselectionmodel.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QComboBox \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qcombobox.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qstyleoption.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractspinbox.h \
@@ -1024,13 +1137,33 @@ mainwindow.o: ../untitled/mainwindow.cpp ../untitled/mainwindow.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qstyle.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qtabbar.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qrubberband.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qframe.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qabstractitemmodel.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QDial \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qdial.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QHBoxLayout \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qboxlayout.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlayout.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlayoutitem.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qgridlayout.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QHeaderView \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qheaderview.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractitemview.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractscrollarea.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qitemselectionmodel.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QLabel \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qlabel.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QMenuBar \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qmenubar.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qmenu.h \
-		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QStatusBar \
-		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qstatusbar.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QPushButton \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qpushbutton.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QSpinBox \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qspinbox.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QToolBar \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/qtoolbar.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QVBoxLayout \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../untitled/mainwindow.cpp
 
@@ -1088,13 +1221,48 @@ arduinoserial.o: ../untitled/arduinoserial.cpp ../untitled/arduinoserial.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtSerialPort/qserialportglobal.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QString \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QObject \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QStringList \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/QMediaPlayer \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaplayer.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaobject.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qtmultimediadefs.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmultimedia.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediacontent.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qshareddata.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qhash.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaresource.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qmap.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qdebug.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qtextstream.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qlocale.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qvariant.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qvector.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qpoint.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qset.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtNetwork/qnetworkrequest.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QSharedDataPointer \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QUrl \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qurl.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qurlquery.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QVariant \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qmediaenumdebug.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qmetaobject.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtMultimedia/qaudio.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtNetwork/qnetworkconfiguration.h \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QTimer \
 		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qtimer.h \
-		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qbasictimer.h
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/qbasictimer.h \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QDebug \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtCore/QList \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtSerialPort/QSerialPortInfo \
+		../../../../Qt5.7.0/5.7/gcc_64/include/QtSerialPort/qserialportinfo.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o arduinoserial.o ../untitled/arduinoserial.cpp
 
-mediaplayer.o: ../untitled/mediaplayer.cpp ../untitled/mediaplayer.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mediaplayer.o ../untitled/mediaplayer.cpp
+qrc_res.o: qrc_res.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_res.o qrc_res.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

@@ -16,12 +16,10 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    arduinoserial.cpp \
-    mediaplayer.cpp
+    arduinoserial.cpp
 
 HEADERS  += mainwindow.h \
-    arduinoserial.h \
-    mediaplayer.h
+    arduinoserial.h
 
 FORMS    += mainwindow.ui
 
