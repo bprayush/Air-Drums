@@ -50,7 +50,7 @@ void loop()
       Serial.print(pin1);
       flag1 = false;
   }
-  else
+  else if(pin1 > threshold)
   {
     flag1 = true;
   }
@@ -66,7 +66,7 @@ void loop()
     Serial.print(pin2);
     flag2 = false;
   }
-  else
+  else if(pin2 > threshold)
   {
     flag2 = true;
   }
@@ -82,10 +82,12 @@ void loop()
     Serial.print(pin3);
     flag3 = false;
   }
-  else
+  else if(pin3 > threshold)
   {
     flag3 = true;
   }
+
+  delay(10);
 }
 
 int getData(int pingPin)
